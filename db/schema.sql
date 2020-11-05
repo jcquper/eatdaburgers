@@ -9,8 +9,8 @@ USE burger_db;
 
 CREATE TABLE burgers (
     id int NOT NULL AUTO_INCREMENT,
-    name varchar(255) NOT NULL,
-    INSERT INTO TABLE burgers VALUES burger_name,
-    devoured BOOLEAN DEFAULT false,
+    burger_name varchar(200) NOT NULL,
+    devoured BOOLEAN NOT NULL DEFAULT FALSE,
+    date TIMESTAMP,
     PRIMARY KEY (id) 
 )
