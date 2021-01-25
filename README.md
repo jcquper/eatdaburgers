@@ -7,6 +7,6 @@ All my files are on https://github.com/jcquper/eatdaburgers
 
 
 
-Live on Heroku @ (insert link)
+## Live on Heroku @ https://eatdaburgerswk13.herokuapp.com/
 
-Added to Portfolio (insert link)
+## Added to Portfolio (insert link)
