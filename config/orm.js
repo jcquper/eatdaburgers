@@ -1,60 +1,80 @@
-/* Import MySQL connection */
-const connection = require("../config/connection.js");
+const connection = require("./connection")
 
-const tableName = "burgers";
-
-
-/* Helper Functions */
-function printQuestionMarks(num) {
-  var arr = [];
-  for (var i = 0; i < num; i++) {
-    arr.push("?");
-  }
-  return arr.toString();
+// creates a question mark for each value
+const printQuestionMarks = (num) => {
+    let arr = [];
+    for (let i = 0; i < num; i++) {
+      arr.push("?");
+    }
+    return arr.toString();
 }
 
-
-/* ORM */
+// adds query to update devoured value from false to true
+const objToSql = (ob) => {
+    let arr = [];
+    for (let key in ob) {
+        const value = ob[key];
+        if (Object.hasOwnProperty.call(ob, key)) {
+            if (typeof value === "string" && value.indexOf(" ") >= 0) {
+                value = `'${value}'`;
+            }
+            arr.push(`${key}=${value}`);
+        }
+    }
+    return arr.toString();
+}
+// orm variable
 const orm = {
+    // query to select all info from the table
+    selectAll: function(tableInput, cb) {
+        let queryString = `SELECT * FROM ${tableInput};`;
+        connection.query(queryString, (err, result) => {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+    // query to add a burger to the table
+    insertOne: function(table, cols, vals, cb) {
+        let queryString = `INSERT INTO ${table}`;
 
-  selectAll : (tableName,callback) => {
+        queryString += " (";
+        queryString += cols.toString();
+        queryString += ") ";
+        queryString += "VALUES (";
+        queryString += printQuestionMarks(vals.length);
+        queryString += ") ";
 
-    let queryStatement = `SELECT * FROM ${tableName};`;
+        connection.query(queryString, vals, (err, result) => {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+    // query to update devoured from false to true
+    updateOne: function(table, objColVals, condition, cb) {
+        let queryString = `UPDATE ${table}`;
 
-    connection.query(queryStatement, (err, result)=>{
-      if (err) throw err;
-      callback(result);
-    });
+        queryString += " SET ";
+        queryString += objToSql(objColVals);
+        queryString += " WHERE ";
+        queryString += condition;
 
-  },
+        connection.query(queryString, (err, result) => {
+            if (err) throw err;
+            cb(result);
+        });
+    },
+    // query to delete a burger from the table
+    delete: function(table, condition, cb) {
+        let queryString = `DELETE FROM ${table}`;
+        queryString += " WHERE ";
+        queryString += condition;
 
-  insertOne: (tableName, cols, vals, callback) => {
+        connection.query(queryString, (err, result) => {
+            if (err) throw err;
+            cb(result);
+        });
+    }
+};
+  
 
-    let queryStatement = `INSERT INTO  ${tableName} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)});`;
-
-    connection.query(queryStatement, vals, (err, result) => {
-      if (err) throw err;
-      console.log("Sucesfully Added");
-      callback(result);
-    });
-
-  },
-
-  updateOne : (tableName, cols, vals, condition, callback) =>{
-
-    let queryStatement = `UPDATE ${tableName} SET ${cols.toString()} = ? WHERE ${condition}`;
-
-    connection.query(queryStatement, vals, (err, result) => {
-      if (err) throw err;
-      console.log("Sucesfully Updated");
-      console.log("Executing Third Declared CallBack");
-      callback(result);
-    });
-
-  }
-
-}
-
-
- /* Exports */
 module.exports = orm;

@@ -1,7 +1,7 @@
-USE burgers_db;
+USE burger_db;
 
-INSERT INTO burgers (id, burger_name, devoured, date)
-VALUES
-(null, "BBQ Western Cheeseburger", FALSE, null),
-(null, "Teriyaki Pineapple Burger", FALSE, null),
-(null, "Jalapeno Cheeseburger", FALSE, null);
+INSERT INTO burgers (burger_name)
+    VALUES
+("BBQ Western Cheeseburger"),
+("Teriyaki Pineapple Burger"),
+("Jalapeno Cheeseburger");
