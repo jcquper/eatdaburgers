@@ -1,0 +1,20 @@
+{
+  "name": "eatdaburgers",
+  "version": "1.0.0",
+  "description": "Hello, thank you for viewing my burger app assignment. I am excited to prepare a organized list of burger ideas for you to 'devour'. I apologize for doing the assignment very rushed I have had a very hectic few weeks but am excited to get back into the swing of things.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcquper/eatdaburgers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcquper/eatdaburgers/issues"
+  },
+  "homepage": "https://github.com/jcquper/eatdaburgers#readme"
+}
